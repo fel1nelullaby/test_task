@@ -1,0 +1,215 @@
+/* Базовые стили общие для панели, публичной формы и страницы ответов.
+   Так визуальные изменения можно сделать в одном месте, не копируя CSS по шаблонам. */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 32px 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+    color: #273444;
+    background: #f4f7f8;
+}
+
+.container {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 32px;
+    background: #fff;
+    border: 1px solid #e5eaee;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(28, 45, 60, 0.06);
+}
+
+h1, h2 {
+    margin-top: 0;
+    color: #23364a;
+}
+
+h1 {
+    margin-bottom: 8px;
+    font-size: 28px;
+}
+
+h2 {
+    margin-top: 28px;
+    font-size: 20px;
+}
+
+.intro,
+.empty-state {
+    color: #647384;
+}
+
+label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 600;
+}
+
+input,
+select {
+    width: 100%;
+    min-width: 0;
+    padding: 11px 12px;
+    border: 1px solid #cbd5df;
+    border-radius: 7px;
+    background: #fff;
+    color: inherit;
+    font: inherit;
+}
+
+input:focus,
+select:focus {
+    outline: 3px solid rgba(52, 132, 196, 0.18);
+    border-color: #3484c4;
+}
+
+.field-group {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(120px, 1fr);
+    gap: 10px;
+    margin: 12px 0;
+}
+
+.question {
+    margin: 20px 0;
+}
+
+button,
+.button-link {
+    display: inline-block;
+    padding: 11px 18px;
+    border: 0;
+    border-radius: 7px;
+    background: #287db8;
+    color: #fff;
+    font: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button:hover,
+.button-link:hover {
+    background: #20699c;
+}
+
+.button-secondary {
+    background: #edf4f8;
+    color: #285d7d;
+}
+
+.button-secondary:hover {
+    background: #dceaf2;
+}
+
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+hr {
+    margin: 32px 0;
+    border: 0;
+    border-top: 1px solid #e7edf1;
+}
+
+.form-list,
+.responses-list {
+    padding: 0;
+    list-style: none;
+}
+
+.form-list > li {
+    padding: 16px 0;
+    border-bottom: 1px solid #edf0f2;
+}
+
+.form-list-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 6px;
+}
+
+.form-title {
+    color: #23364a;
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.response-count,
+.response-date {
+    color: #748292;
+    font-size: 13px;
+}
+
+a {
+    color: #287db8;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    text-decoration: none;
+}
+
+.response-card {
+    margin: 18px 0;
+    padding: 20px;
+    border: 1px solid #e5eaee;
+    border-radius: 9px;
+}
+
+.response-card h2 {
+    display: inline-block;
+    margin: 0 12px 0 0;
+}
+
+.answer-list {
+    margin: 18px 0 0;
+}
+
+.answer-item {
+    padding: 10px 0;
+    border-top: 1px solid #edf0f2;
+}
+
+.answer-item dt {
+    font-weight: 700;
+}
+
+.answer-item dd {
+    margin: 4px 0 0;
+    overflow-wrap: anywhere;
+}
+
+.centered {
+    text-align: center;
+}
+
+@media (max-width: 560px) {
+    body {
+        padding: 16px 10px;
+    }
+
+    .container {
+        padding: 22px 18px;
+    }
+
+    .field-group {
+        grid-template-columns: 1fr;
+    }
+
+    .form-list-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

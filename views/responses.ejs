@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ответы — <%= form.title %></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <main class="container">
+        <a class="back-link" href="/admin">&larr; Вернуться к формам</a>
+        <h1>Ответы: <%= form.title %></h1>
+
+        <% if (form.responses.length === 0) { %>
+            <p class="empty-state">Пока никто не заполнил эту форму.</p>
+        <% } else { %>
+            <p class="intro">Всего получено ответов: <%= form.responses.length %></p>
+
+            <ol class="responses-list">
+                <% form.responses.forEach((response, index) => { %>
+                    <li class="response-card">
+                        <h2>Ответ №<%= index + 1 %></h2>
+                        <time class="response-date" datetime="<%= response.date %>">
+                            <%= new Date(response.date).toLocaleString('ru-RU') %>
+                        </time>
+
+                        <dl class="answer-list">
+                            <% form.fields.forEach((field) => { %>
+                                <div class="answer-item">
+                                    <dt><%= field.label %></dt>
+                                    <!-- беру ответ по id вопроса, а не перебираю все пришедшие ключи. 
+                                     поэтому порядок на странице совпадает с порядком вопросов в исходной форме. -->
+                                    <dd><%= response.answers[field.id] || '—' %></dd>
+                                </div>
+                            <% }) %>
+                        </dl>
+                    </li>
+                <% }) %>
+            </ol>
+        <% } %>
+    </main>
+</body>
+</html>

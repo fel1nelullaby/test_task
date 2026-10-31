@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Управление формами</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <main class="container">
+        <h1>Панель управления</h1>
+        <p class="intro">Здесь можно создать форму и посмотреть ответы, которые уже поступили.</p>
+
+        <section>
+            <h2>Создать новую форму</h2>
+
+            <form action="/admin/create" method="POST" id="create-form">
+                <label for="form-title">Название формы</label>
+                <input
+                    id="form-title"
+                    type="text"
+                    name="title"
+                    placeholder="Например, Анкета участника"
+                    required
+                >
+
+                <div id="fields-container">
+                    <div class="field-group">
+                        <input
+                            type="text"
+                            name="fieldLabel"
+                            placeholder="Текст вопроса"
+                            aria-label="Текст вопроса"
+                            required
+                        >
+                        <select name="fieldType" aria-label="Тип ответа">
+                            <option value="text">Текст</option>
+                            <option value="email">Email</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="button button-secondary" type="button" id="add-field">
+                        + Добавить вопрос
+                    </button>
+                    <button type="submit">Создать форму</button>
+                </div>
+            </form>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Мои формы</h2>
+
+            <% if (forms.length === 0) { %>
+                <p class="empty-state">Пока нет ни одной формы. Создайте первую выше.</p>
+            <% } else { %>
+                <ul class="form-list">
+                    <% forms.forEach((form) => { %>
+                        <li>
+                            <div class="form-list-heading">
+                                <!-- выводящий тег EJS экранирует текст. введённый HTML должен отображаться как текст,
+                                     а не превращаться в разметку. -->
+                                <a class="form-title" href="/admin/forms/<%= form.id %>">
+                                    <%= form.title %>
+                                </a>
+                                <span class="response-count">
+                                    Ответов: <%= form.responses.length %>
+                                </span>
+                            </div>
+                            <a href="/form/<%= form.id %>" target="_blank" rel="noopener noreferrer">
+                                Открыть публичную форму
+                            </a>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } %>
+        </section>
+    </main>
+
+    <script>
+        const fieldsContainer = document.getElementById('fields-container');
+        const addFieldButton = document.getElementById('add-field');
+
+        // создаю элементы через DOM API, чтобы значения и подписи не интерпретировались HTML разметка.
+        function createFieldGroup() {
+            const group = document.createElement('div');
+            group.className = 'field-group';
+
+            const questionInput = document.createElement('input');
+            questionInput.type = 'text';
+            questionInput.name = 'fieldLabel';
+            questionInput.placeholder = 'Текст вопроса';
+            questionInput.setAttribute('aria-label', 'Текст вопроса');
+            questionInput.required = true;
+
+            const typeSelect = document.createElement('select');
+            typeSelect.name = 'fieldType';
+            typeSelect.setAttribute('aria-label', 'Тип ответа');
+
+            // варианты задаются явно (разметкa вне JS)
+            [
+                { value: 'text', label: 'Текст' },
+                { value: 'email', label: 'Email' }
+            ].forEach((optionData) => {
+                const option = document.createElement('option');
+                option.value = optionData.value;
+                option.textContent = optionData.label;
+                typeSelect.appendChild(option);
+            });
+
+            group.append(questionInput, typeSelect);
+            return group;
+        }
+
+        addFieldButton.addEventListener('click', () => {
+            fieldsContainer.appendChild(createFieldGroup());
+        });
+    </script>
+</body>
+</html>
